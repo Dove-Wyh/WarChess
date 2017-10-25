@@ -4,8 +4,8 @@ namespace 战棋
 {
     public class Position
     {
-        private int x;
-        private int y;
+        public int x;
+        public int y;
 
         public Position(int x,int y)
         {

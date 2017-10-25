@@ -3,13 +3,12 @@
     public class LevelManager
     {
         public static LevelManager instance;
-        private Level level;
-
+        public Level level;
+        public int presentLevel = 0;
         public LevelManager()
         {
             instance = this;
             this.level = new Level();
         }
-        
     }
 }

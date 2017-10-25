@@ -17,16 +17,17 @@ namespace 战棋
     }
     public class Terrain
     {
-        private 地形 地形;
-        private ConsoleColor 地形颜色;
-        private int 体力消耗;
-        private Position 位置;
+        public 地形 地形;
+        public ConsoleColor 地形颜色;
+        public int 体力消耗;
+        public Position 位置;
 
         public Terrain(地形 地形, ConsoleColor 地形颜色, int 体力消耗, Position 位置)
         {
             this.地形 = 地形;
             this.地形颜色 = 地形颜色;
             this.体力消耗 = 体力消耗;
+            this.位置 = 位置;
         }
     }
 
