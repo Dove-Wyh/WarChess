@@ -2,13 +2,13 @@
 {
     public enum 兵种
     {
-        步兵,   //步兵
-        弓兵,     //弓兵
-        骑兵, //骑兵
-        弩兵,  //弩兵
-        法师,       //法师
-        牧师,     //牧师
-        平民    //平民
+        步兵,         //步兵
+        弓兵,         //弓兵
+        骑兵,         //骑兵
+        弩兵,         //弩兵
+        法师,         //法师
+        牧师,         //牧师
+        平民          //平民
     }
 
     public class Character
@@ -46,6 +46,26 @@
         }
     }
 
+    public class 勇士 : Character
+    {
+        public int 当前生命值 = 300;
+        public int 当前魔法值 = 300;
+
+        public Position 位置;
+        public 勇士(Position 位置) : base(兵种.步兵, "勇", 300, 300, 30, 9, 5, 1, 位置)
+        { }
+    }
+
+    public class 牧师 : Character
+    {
+        public int 当前生命值 = 300;
+        public int 当前魔法值 = 300;
+
+        public Position 位置;
+        public 牧师(Position 位置) : base(兵种.步兵, "牧", 300, 300, 30, 9, 5, 1, 位置)
+        { }
+    }
+
     public class 步兵 : Character
     {
         public int 当前生命值 = 30;
@@ -62,7 +82,37 @@
         public int 当前魔法值 = 0;
 
         public Position 位置;
-        public 骑兵(Position 位置) : base(兵种.步兵, "骑", 30, 0, 10, 10, 5, 1, 位置)
+        public 骑兵(Position 位置) : base(兵种.步兵, "骑", 30, 0, 10, 10, 4, 1, 位置)
+        { }
+    }
+
+    public class 弓兵 : Character
+    {
+        public int 当前生命值 = 20;
+        public int 当前魔法值 = 0;
+
+        public Position 位置;
+        public 弓兵(Position 位置) : base(兵种.弓兵, "弓", 20, 0, 10, 5, 2, 1, 位置)
+        { }
+    }
+
+    public class 法师 : Character
+    {
+        public int 当前生命值 = 20;
+        public int 当前魔法值 = 30;
+
+        public Position 位置;
+        public 法师(Position 位置) : base(兵种.法师, "法", 20, 0, 15, 5, 2, 1, 位置)
+        { }
+    }
+
+    public class 女皇 : Character
+    {
+        public int 当前生命值 = 20;
+        public int 当前魔法值 = 30;
+
+        public Position 位置;
+        public 女皇(Position 位置) : base(兵种.法师, "皇", 20, 0, 15, 5, 2, 1, 位置)
         { }
     }
 }

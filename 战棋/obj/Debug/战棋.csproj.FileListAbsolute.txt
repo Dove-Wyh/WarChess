@@ -11,3 +11,4 @@ D:\VSWorkSpace\WarChess\战棋\bin\Debug\战棋.pdb
 D:\VSWorkSpace\WarChess\战棋\obj\Debug\战棋.csprojResolveAssemblyReference.cache
 D:\VSWorkSpace\WarChess\战棋\obj\Debug\战棋.exe
 D:\VSWorkSpace\WarChess\战棋\obj\Debug\战棋.pdb
+D:\VSWorkSpace\WarChess\战棋\obj\Debug\战棋.csproj.CoreCompileInputs.cache
