@@ -23,11 +23,11 @@ namespace 战棋
             
             while (true)
             {
-                Control.instance.MoveCursor();
-                map.ShowInformation();
+                control.MoveCursor();
+                
             }
 
-            Console.Read();
+            //Console.Read();
         }
     }
 }

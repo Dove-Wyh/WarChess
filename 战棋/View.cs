@@ -6,10 +6,11 @@ namespace 战棋
 {
     public class View
     {
-        //public Position DefaultPosition;
+        public static View instance;
 
         public View()
         {
+            instance = this;
             Console.WriteLine("┌───────────────┐");//中间有15个特殊符号 等于30个空格，但是在IDE中显示的和15个空格的长度相等
             Console.WriteLine("│                              │");
             Console.WriteLine("│                              │");
@@ -37,29 +38,29 @@ namespace 战棋
             List<Building> BuildingList = Model.instance.BuildingList;
             List<Character> ProtagonistList = Model.instance.ProtagonistList;
 
-            for (int i = 0; i < TerrainList.Count; i++)
+            for (int i = 0; i < 225; i++)
             {
-                if (EnemyList[i] == null && BuildingList[i] == null && ProtagonistList[i] == null)
+                if (EnemyList[i] == null && BuildingList[i] == null && ProtagonistList[i] == null)//如果啥都没有
                 {
                     Console.SetCursorPosition(TerrainList[i].位置.x, TerrainList[i].位置.y);
                     Console.BackgroundColor = TerrainList[i].地形颜色;
                     Console.Write("　");
                 }
-                else if (EnemyList[i] == null && ProtagonistList[i] == null)
+                else if (BuildingList[i] != null)//如果建筑不为空
                 {
                     Console.SetCursorPosition(BuildingList[i].位置.x, BuildingList[i].位置.y);
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.BackgroundColor = TerrainList[i].地形颜色;
                     Console.Write(BuildingList[i].标志);
                 }
-                else if (BuildingList[i] == null && ProtagonistList[i] == null)
+                else if (EnemyList[i] != null)//如果敌人不为空
                 {
                     Console.SetCursorPosition(EnemyList[i].位置.x, EnemyList[i].位置.y);
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.BackgroundColor = TerrainList[i].地形颜色;
                     Console.Write(EnemyList[i].名字);
                 }
-                else
+                else//如果英雄不为空
                 {
                     Console.SetCursorPosition(ProtagonistList[i].位置.x, ProtagonistList[i].位置.y);
                     Console.ForegroundColor = ConsoleColor.Magenta;
@@ -78,7 +79,8 @@ namespace 战棋
             for (int i = 0, j = 0; i < 独白.Length; i++, j++)
             {
                 Console.Write(独白[i]);
-                Thread.Sleep(100);
+                //Thread.Sleep(100);
+                Thread.Sleep(10);
                 if (j > 40)
                 {
                     Console.SetCursorPosition(17*2, 2);
@@ -92,12 +94,20 @@ namespace 战棋
         {
             int x = Control.instance.x;
             int y = Control.instance.y;
-            int treeain = Model.instance.terrainInts[x - 1, y - 1];
-            int up = Model.instance.UpInts[x - 1, y - 1];
+            Character upCharacter;
+            upCharacter = Model.instance.UpList[x * 15 + y];
+            int treeain = Model.instance.terrainInts[y, x];
+            int up = Model.instance.UpInts[y, x];
             string treeainName;
             string treeainDescription;
             string upName;
             string upDescription;
+            string upHP = "";
+            string upMP = "";
+            string upATK = "";
+            string upDEF = "";
+            string blank = "                                                                                    ";
+
             switch (treeain)
             {
                 case 1:
@@ -132,12 +142,12 @@ namespace 战棋
                     upDescription = "信息：拿刀的！";
                     break;
                 case 2:
-                    upName = "骑兵";
-                    upDescription = "信息：骑着马拿刀的！";
-                    break;
-                case 3:
                     upName = "弓兵";
                     upDescription = "信息：拿弓箭的！";
+                    break;
+                case 3:
+                    upName = "骑兵";
+                    upDescription = "信息：骑着马拿刀的！";
                     break;
                 case 4:
                     upName = "魔法师";
@@ -168,6 +178,33 @@ namespace 战棋
                     upDescription = "";
                     break;
             }
+
+            if (upCharacter != null)
+            {
+                upHP = "当前生命值：" + upCharacter.当前生命值.ToString();
+                upMP = "当前魔法值：" + upCharacter.当前魔法值.ToString();
+                upATK = "攻击力：" + upCharacter.攻击力.ToString();
+                upDEF = "防御力：" + upCharacter.防御力.ToString();
+            }
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(17 * 2, 4);
+            Console.Write(blank);
+            Console.SetCursorPosition(17 * 2, 5);
+            Console.Write(blank);
+            Console.SetCursorPosition(17 * 2, 7);
+            Console.Write(blank);
+            Console.SetCursorPosition(17 * 2, 8);
+            Console.Write(blank);
+            Console.SetCursorPosition(17 * 2, 9);
+            Console.Write(blank);
+            Console.SetCursorPosition(17 * 2, 10);
+            Console.Write(blank);
+            Console.SetCursorPosition(17 * 2, 11);
+            Console.Write(blank);
+            Console.SetCursorPosition(17 * 2, 12);
+            Console.Write(blank);
+
             Console.SetCursorPosition(17 * 2, 4);
             Console.Write(treeainName);
             Console.SetCursorPosition(17 * 2, 5);
@@ -176,87 +213,15 @@ namespace 战棋
             Console.Write(upName);
             Console.SetCursorPosition(17 * 2, 8);
             Console.Write(upDescription);
+            Console.SetCursorPosition(17 * 2, 9);
+            Console.Write(upHP);
+            Console.SetCursorPosition(17 * 2, 10);
+            Console.Write(upMP);
+            Console.SetCursorPosition(17 * 2, 11);
+            Console.Write(upATK);
+            Console.SetCursorPosition(17 * 2, 12);
+            Console.Write(upDEF);
         }
-
-        public void DisplayCursor()
-        {
-            //ConsoleColor terrainColor;
-            //ConsoleColor fontColor;
-            //string upName;
-            //int Terrain = Model.instance.terrainInts[DefaultPosition.y - 1, DefaultPosition.x - 1];    //获取到指定地点的颜色代码
-            //int item = Model.instance.UpInts[DefaultPosition.y - 1, DefaultPosition.x - 1];            //获取该地形上的信息 建筑是9，敌人是5，主角是1
-
-            //switch (Terrain)
-            //{
-            //    case 1:
-            //        terrainColor = ConsoleColor.Gray;
-            //        break;
-            //    case 2:
-            //        terrainColor = ConsoleColor.Cyan;
-            //        break;
-            //    case 3:
-            //        terrainColor = ConsoleColor.DarkCyan;
-            //        break;
-            //    case 4:
-            //        terrainColor = ConsoleColor.DarkGreen;
-            //        break;
-            //    case 5:
-            //        terrainColor = ConsoleColor.DarkYellow;
-            //        break;
-            //    default:
-            //        terrainColor = ConsoleColor.Black;
-            //        break;
-            //}
-
-            //switch (item)
-            //{
-            //    case 1:
-            //        upName = "步";
-            //        fontColor = ConsoleColor.Red;
-            //        break;
-            //    case 2:
-            //        upName = "骑";
-            //        fontColor = ConsoleColor.Red;
-            //        break;
-            //    case 3:
-            //        upName = "弓";
-            //        fontColor = ConsoleColor.Red;
-            //        break;
-            //    case 4:
-            //        upName = "魔";
-            //        fontColor = ConsoleColor.Red;
-            //        break;
-            //    case 5:
-            //        upName = "皇";
-            //        fontColor = ConsoleColor.Red;
-            //        break;
-            //    case 6:
-            //        upName = "勇";
-            //        fontColor = ConsoleColor.DarkMagenta;
-            //        break;
-            //    case 7:
-            //        upName = "牧";
-            //        fontColor = ConsoleColor.DarkMagenta;
-            //        break;
-            //    case 8:
-            //        upName = "◇";
-            //        fontColor = ConsoleColor.Black;
-            //        break;
-            //    case 9:
-            //        upName = "█";
-            //        fontColor = ConsoleColor.Black;
-            //        break;
-            //    default:
-            //        upName = "";
-            //        fontColor = ConsoleColor.White;
-            //        break;
-            //}
-
-            //Console.SetCursorPosition(DefaultPosition.x, DefaultPosition.y);
-
-            //Console.BackgroundColor = terrainColor;
-            //Console.ForegroundColor = fontColor;
-            //Console.Write(upName);
-        }
+        
     }
 }
