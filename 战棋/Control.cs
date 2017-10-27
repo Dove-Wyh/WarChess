@@ -16,18 +16,16 @@ namespace 战棋
         private List<可以的格子> 可以攻击的格子集合;
         private 勇士 勇士;
 
-        public Position position;//初始化时候的光标坐标
-
         public Control()
         {
             x = 0;
             y = 14;
             instance = this;
-            //position = new Position(x * 2 + 1, y);
         }
 
         public void MoveCursor()
         {
+            Console.SetCursorPosition((x + 1) * 2, y + 1);
             if (Console.KeyAvailable)
             {
                 consoleKeyInfo = Console.ReadKey(true);
@@ -155,16 +153,16 @@ namespace 战棋
                 Console.Write(upName);
             }
             Console.SetCursorPosition((x + 1) * 2, y + 1);
-            Model.instance.ProtagonistInts[y, x] = 0;
+            
             勇士 = Model.instance.ProtagonistList[x * 15 + y] as 勇士;
 
             //不能这么写
             //Model.instance.ProtagonistList.RemoveAt((x - 1) * 15 + (y - 1));
-
+            Model.instance.ProtagonistInts[y, x] = 0;
             Model.instance.ProtagonistList[x * 15 + y] = null;
             Model.instance.UpInts[y, x] = 0;
             Model.instance.UpList[x * 15 + y] = null;
-            
+
         }
 
         public void ShowATKArea()
@@ -185,18 +183,17 @@ namespace 战棋
             }
 
             //查看攻击范围内有没有敌人
-            bool haveEnemy = false;
+            isAttack = false;
             foreach (var 可以攻击的格子 in 可以攻击的格子集合)
             {
-                if (可以攻击的格子.type == 1 || 可以攻击的格子.type == 2 || 可以攻击的格子.type == 3 || 可以攻击的格子.type == 4 || 可以攻击的格子.type == 5)
+                if (可以攻击的格子.type == 1 || 可以攻击的格子.type == 2 || 可以攻击的格子.type == 3 || 可以攻击的格子.type == 4)
                 {
-                    haveEnemy = true;
-                    isAttack = false;
+                    isAttack = true;
                 }
             }
 
             //高亮可以攻击的格子
-            if (haveEnemy)
+            if (isAttack)
             {
                 foreach (var 可以攻击的格子 in 可以攻击的格子集合)
                 {
@@ -284,18 +281,44 @@ namespace 战棋
             //先判断光标是否在攻击范围内
             foreach (var 可以攻击的格子 in 可以攻击的格子集合)
             {
-                if (y == 可以攻击的格子.x && x == 可以攻击的格子.y)
+                if (y == 可以攻击的格子.x && x == 可以攻击的格子.y)//如果光标选定位置存在可以攻击范围内
                 {
                     //再判断是否有敌人
                     if (可以攻击的格子.type == 1 || 可以攻击的格子.type == 2 || 可以攻击的格子.type == 3 || 可以攻击的格子.type == 4 || 可以攻击的格子.type == 5)
                     {
                         Character enmey = Model.instance.EnemyList[x * 15 + y];
+
                         enmey.当前生命值 -= 勇士.攻击力 - enmey.防御力;
+
                         勇士.当前生命值 -= enmey.攻击力 - 勇士.防御力;
+
+                        View.instance.ShowBattleInformation(勇士, enmey);
+
+                        if (enmey.当前生命值 <= 0)
+                        {
+                            Model.instance.enemyInts[y, x] = 0;
+                            Model.instance.EnemyList[x * 15 + y] = null;
+                            Model.instance.UpInts[y, x] = 0;
+                            Model.instance.UpList[x * 15 + y] = null;
+                        }
+
+                        isAttack = false;
+                        可以攻击的格子集合 = null;
+                        Console.SetCursorPosition((x + 1) * 2, y + 1);
+                        View.instance.LoadScenes();
                     }
                 }
             }
-            
+        }
+
+        public bool GameOver()
+        {
+            if (Model.instance.ProtagonistInts[1, 7] == 6)
+            {
+                return true;
+            }
+            else
+                return false;
         }
     }
 

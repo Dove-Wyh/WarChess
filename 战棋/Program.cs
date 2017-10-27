@@ -24,10 +24,13 @@ namespace 战棋
             while (true)
             {
                 control.MoveCursor();
-                
+                if (control.GameOver())
+                {
+                    break;
+                }
             }
-
-            //Console.Read();
+            map.ShowEnd();
+            Console.Read();
         }
     }
 }

@@ -80,7 +80,7 @@ namespace 战棋
             {
                 Console.Write(独白[i]);
                 //Thread.Sleep(100);
-                Thread.Sleep(10);
+                Thread.Sleep(80);
                 if (j > 40)
                 {
                     Console.SetCursorPosition(17*2, 2);
@@ -223,5 +223,39 @@ namespace 战棋
             Console.Write(upDEF);
         }
         
+        public void ShowBattleInformation(Character 攻击者,Character 被攻击者)
+        {
+            Console.SetCursorPosition(17 * 2, 14);
+            Console.Write("                                                         ");
+            Console.SetCursorPosition(17 * 2, 15);
+            Console.Write("                                                         ");
+
+            Console.SetCursorPosition(17 * 2, 14);
+            Console.Write(攻击者.名字 + " 主动对 " + 被攻击者.名字 + " 造成了 " + (攻击者.攻击力 - 被攻击者.防御力) + " 点伤害！");
+            Console.SetCursorPosition(17 * 2, 15);
+            Console.Write(被攻击者.名字 + " 被动对 " + 攻击者.名字 + " 造成了 " + (被攻击者.攻击力 - 攻击者.防御力) + " 点伤害！");
+        }
+
+        public void ShowEnd()
+        {
+            Console.Clear();
+            Console.SetCursorPosition(0, 0);
+            Console.ForegroundColor = ConsoleColor.White;
+            string 独白1 = "    勇士杀死了巫师，救出了女皇，女皇非常感谢勇士，邀请他与自己一起治理这个国家。";
+            string 独白2 = "    不过，这就是另外一个故事了！";
+            foreach (var 字 in 独白1)
+            {
+                Console.Write(字);
+                
+                Thread.Sleep(50);
+            }
+            Console.WriteLine();
+            foreach (var 字 in 独白2)
+            {
+                Console.Write(字);
+
+                Thread.Sleep(10);
+            }
+        }
     }
 }
